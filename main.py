@@ -34,7 +34,7 @@ def send_sms(link):
         account_sid = 'AC6bc78afd56470c418c040315901b6fd2'
         auth_token = 'f3c2672a0ca2ea2808d57dd63f428d3e'
         client = Client(account_sid, auth_token)
-        client.messages.create(body="Doorbell: Join meeting using link: {}".format(link),from_='+15203896643', to='+2348051230116').sid
+        client.messages.create(body="Doorbell: Join meeting using link: {}".format(link),from_='+15203896643', to='+2349137927887').sid
 
 
 def ring_doorbell(pin):

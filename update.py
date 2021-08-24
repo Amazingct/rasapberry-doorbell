@@ -2,7 +2,7 @@ import os
 import time
 user = "pi"
 dir = "/home/{}".format(user)
-wait = 15
+wait = 0
 
 # wait
 time.sleep(wait)
@@ -13,4 +13,4 @@ try:
 except:
     os.system("sudo apt install git")
 
-time.sleep(wait-5)
+time.sleep(5)
