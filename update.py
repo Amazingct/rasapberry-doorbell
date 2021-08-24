@@ -1,6 +1,6 @@
 import os
 import time
-user = "pi"
+user = "pi/Documents"
 dir = "/home/{}".format(user)
 wait = 0
 
@@ -10,6 +10,7 @@ time.sleep(wait)
 os.chdir(dir)
 try:
     os.system("git clone https://github.com/Amazingct/rasapberry-doorbell")
+    os.system("mv -r rasapberry-doorbell /home/pi")
 except:
     os.system("sudo apt install git")
 
