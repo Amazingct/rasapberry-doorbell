@@ -1,0 +1,11 @@
+[Unit]
+Description=Main Doorbell
+After=multi-user.target
+
+[Service]
+Type=Application
+ExecStart=/usr/bin/python3 /home/pi/rasapberry-doorbell/main.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
