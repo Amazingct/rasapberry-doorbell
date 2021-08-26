@@ -1,16 +1,19 @@
+#/usr/bin/python3
 sent_sms = 0
 DOORBELL_PIN = 26
-DOORBELL_SCREEN_ACTIVE_S = 200
+DOORBELL_SCREEN_ACTIVE_S = 120
 JITSI_ID = "doorbellring12345"
 RING_SFX_PATH = None
 ENABLE_EMAIL = False
-
+import tkinter
+window = tkinter.Tk()
+window.title("GUI")
+label = tkinter.Label(window, text = "DOORBELL< WELCOME").pack()
 from twilio.rest import Client
 import time
 import os
 import signal
 import subprocess
-import uuid
 from vlc import MediaPlayer
 
 try:
@@ -32,16 +35,22 @@ def send_sms(link):
     global sent_sms
     if sent_sms == 0:
         account_sid = 'AC6bc78afd56470c418c040315901b6fd2'
-        auth_token = 'f3c2672a0ca2ea2808d57dd63f428d3e'
+        auth_token = '36e9d7c90599a6462d88550f66754955'
         client = Client(account_sid, auth_token)
-        client.messages.create(body="Doorbell: Join meeting using link: {}".format(link),from_='+15203896643', to='+2349137927887').sid
+
+        message = client.messages.create(
+            messaging_service_sid='MGd6a377c071d5756ec3385a8f8c4aaddf',
+            body="Doorbell: Join meeting using link: {}".format(link),
+            to='+2348051230116'
+        )
+
 
 
 def ring_doorbell(pin):
     global sent_sms
-    chat_id = JITSI_ID if JITSI_ID else str(uuid.uuid4())
+    chat_id = JITSI_ID
     video_chat = VideoChat(chat_id)
-    MediaPlayer("ring.mp3").play()
+    MediaPlayer("/home/pi/rasapberry-doorbell/ring.mp3").play()
     send_sms(video_chat.get_chat_url())
     show_screen()
     video_chat.start()
@@ -77,6 +86,7 @@ class Doorbell:
 
     def run(self):
         try:
+
             print("Starting Doorbell...")
             hide_screen()
             self._setup_gpio()
@@ -90,21 +100,27 @@ class Doorbell:
             self._cleanup()
 
     def _wait_forever(self):
-        while True:
+            window.mainloop()
             time.sleep(0.1)
 
     def _setup_gpio(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._doorbell_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self._doorbell_button_pin, GPIO.RISING, callback=ring_doorbell, bouncetime=2000)
+        try:
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(self._doorbell_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            GPIO.add_event_detect(self._doorbell_button_pin, GPIO.RISING, callback=ring_doorbell, bouncetime=2000)
+        except:
+            pass
 
     def _cleanup(self):
-        GPIO.cleanup(self._doorbell_button_pin)
-        show_screen()
-
+        try:
+            GPIO.cleanup(self._doorbell_button_pin)
+            show_screen()
+        except:
+            pass
 
 doorbell = Doorbell(DOORBELL_PIN)
 doorbell.run()
-#ring_doorbell(1)
+
+
 
 

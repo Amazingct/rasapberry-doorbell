@@ -10,8 +10,10 @@ time.sleep(wait)
 os.chdir(dir)
 try:
     os.system("git clone https://github.com/Amazingct/rasapberry-doorbell")
-    os.system("mv -r rasapberry-doorbell /home/pi")
+    os.system("mv rasapberry-doorbell /home/pi")
 except:
     os.system("sudo apt install git")
+    os.system("git clone https://github.com/Amazingct/rasapberry-doorbell")
+    os.system("mv rasapberry-doorbell /home/pi")
 
 time.sleep(5)
