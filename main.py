@@ -34,14 +34,14 @@ def hide_screen():
 def send_sms(link):
     global sent_sms
     if sent_sms == 0:
-        account_sid = 'AC6bc78afd56470c418c040315901b6fd2'
-        auth_token = '36e9d7c90599a6462d88550f66754955'
+        account_sid = 'AC7cab1dd6c21df2e084f59bd0c10e9d84'
+        auth_token = '4056b5a5fe68586d03a0cc22ed1b022b'
         client = Client(account_sid, auth_token)
 
         message = client.messages.create(
-            messaging_service_sid='MGd6a377c071d5756ec3385a8f8c4aaddf',
+            messaging_service_sid='MG636d6da0db1c920d83f1eb29d4729a66',
             body="Doorbell: Join meeting using link: {}".format(link),
-            to='+2348051230116'
+            to='+2348168864021'
         )
 
 
